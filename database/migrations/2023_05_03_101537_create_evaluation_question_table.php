@@ -11,6 +11,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('evaluation_question', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('presentation_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('evaluation_format_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('evaluation_point_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();

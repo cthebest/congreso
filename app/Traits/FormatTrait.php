@@ -57,11 +57,11 @@ trait FormatTrait
         ])->validate();
         foreach ($this->evaluationPoints as $evaluationPoint) {
             foreach ($evaluationPoint['questions'] as $question) {
-                $evaluatePresentationWithQuestions[$question['id']] = ['evaluation_format_id' => 1, 'evaluation_point_id' => $evaluationPoint['id'], 'presentation_id' => $this->presentation_id, 'note' => $question['note']];
+                $evaluatePresentationWithQuestions[$question['id']] = ['evaluation_format_id' => $this->evaluation_format_id, 'evaluation_point_id' => $evaluationPoint['id'], 'presentation_id' => $this->presentation_id, 'note' => $question['note']];
             }
         }
 
-        $user->evaluation_questions()->sync($evaluatePresentationWithQuestions);
+        $user->evaluation_questions()->attach($evaluatePresentationWithQuestions);
 
         $user->review_presentations()->attach($this->presentation_id, ['evaluation_format_id' => $this->evaluation_format_id, 'thematic_id' => $this->thematic, 'general_evaluation' => $this->general_evaluation, 'description' => $this->description]);
 
