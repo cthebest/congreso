@@ -7,8 +7,35 @@
                 seleccionado todos los criterios necesarios.</p>
         </div>
     @endif
-    <div>
+    <div class="mt-4">
+        <x-form-fieldset>
+            <legend>A.PERTINENCIA DEL TRABAJO CON RESPECTO A LA FORMACIÓN DE PROFESORES, LOS EJES PROBLÉMICOS Y AL
+                LEMA.
+            </legend>
+            <p>Seleccione el eje temático al cual se ajusta el escrito.</p>
+            <x-input-error :messages="$errors->get('thematic')" class="mt-2"/>
+            <table class="table-auto table-layout-fixed">
+                <thead>
+                <tr>
+                    <th class="w-1/2 px-4 py-2">EJES TEMÁTICOS</th>
+                    <th class="w-1/2 px-4 py-2"></th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($thematics as $thematic)
+                    <tr class="border">
+                        <td class="px-4 py-2">{{$thematic->description}}
+                        </td>
+                        <td class="px-4 py-2 flex justify-center">
+                            {{html()->radio('thematic')->value($thematic->id)->attribute('wire:model','thematic')}}
+                        </td>
 
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+
+        </x-form-fieldset>
     </div>
     @foreach($evaluationPoints as $evaluation_key=>$evaluation)
         <div class="mt-4">
@@ -24,7 +51,7 @@
                     </thead>
                     <tbody>
                     @foreach($evaluation['questions'] as $question_key=> $question)
-                        <tr wire:key="{{ $loop->index }}">
+                        <tr>
                             <td class="px-4 py-2">{{$question['description']}}
                             </td>
                             <td class="px-4 py-2 flex justify-center">
@@ -43,6 +70,18 @@
             </x-form-fieldset>
         </div>
     @endforeach
+
+    <div class="mt-4 flex flex-col">
+        {{html()->label("D.VALORACION GENERAL")->for("general_evaluation")}}
+        {{html()->select('general_evaluation', ['aceptado'=>'ACEPTADO','aceptado con modificaciones'=>'ACEPTADO CON MODIFICACIONES','no es aceptado'=>'NO ES ACEPTADO'])->placeholder('Seleccione una opción')->attribute("wire:model", "general_evaluation")}}
+        <x-input-error :messages="$errors->get('general_evaluation')" class="mt-2"/>
+    </div>
+
+    <div class="mt-4 flex flex-col">
+        {{html()->label("Describa, en un máximo de 255 caracteres, su valoración del escrito. De ser el caso, indique los ajustes que deben realizarse, pues esta información se remitirá al autor / autores.")->for("description")}}
+        <textarea id="description" name="description" wire:model="description"></textarea>
+        <x-input-error :messages="$errors->get('description')" class="mt-2"/>
+    </div>
 
     <div class="flex items-center justify-end mt-4">
         <x-primary-button class="ml-4" wire:click="store">

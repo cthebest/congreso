@@ -16,6 +16,13 @@ class PresentationPolicy
         //
     }
 
+    public function free($user, $presentation)
+    {
+        return $presentation->whereHas('thematics', function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            })->get()->count() > 0;
+    }
+
     /**
      * Determine whether the user can view the model.
      */

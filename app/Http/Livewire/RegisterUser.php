@@ -43,7 +43,7 @@ class RegisterUser extends Component
         $this->user = $user ?? new User();
         if ($user && $user->roles()->count() > 0) {
             $this->role_id = $user->roles()->first()->id;
-            $this->assigned_presentations = $user->presentations()->get();
+            $this->assigned_presentations = $user->presentations()->with('thematics')->get();
         }
     }
 

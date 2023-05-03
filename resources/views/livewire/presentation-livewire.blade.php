@@ -32,7 +32,7 @@
                     @endrole
                     @if($evaluate_presentation_id>0)
                         <a href="{{route('evaluations.presentation', $evaluate_presentation_id)}}"
-                            class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors
+                           class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors
                             duration-200 sm:text-sm dark:hover:bg-gray-800 dark:text-gray-300
                             hover:bg-gray-100 dark:bg-gray-900">
                             Evaluar ponencia
@@ -73,11 +73,12 @@
                                             class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                             ID
                                         </th>
-
+                                        @role('evaluator')
                                         <th scope="col"
                                             class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
 
                                         </th>
+                                        @endrole
 
                                         <th scope="col"
                                             class="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -115,15 +116,18 @@
                                                 {{html()->checkbox('delete')->value($presentation->id)->attribute('wire:model', 'presentations_id')}}
                                             </td>
                                             @endrole
+
                                             <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
                                                 <div>
                                                     <h2 class="font-medium text-gray-800 dark:text-white ">{{$presentation->id}}</h2>
                                                 </div>
                                             </td>
 
+                                            @role('evaluator')
                                             <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
                                                 {{html()->radio('select')->value($presentation->id)->attribute('wire:model','evaluate_presentation_id')}}
                                             </td>
+                                            @endrole
                                             <td class="px-12 py-4 text-sm font-medium whitespace-nowrap dark:text-white hover:text-green-500">
                                                 {{$presentation->title}}
                                             </td>

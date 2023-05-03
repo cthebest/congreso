@@ -67,6 +67,23 @@ class User extends Authenticatable
     }
 
 
+    // Evaluacion general de la ponencia
+    public function thematics(): BelongsToMany
+    {
+        return $this->belongsToMany(Thematic::class, 'paper_reviews');
+    }
+
+    public function review_question_formats(): BelongsToMany
+    {
+        return $this->belongsToMany(EvaluationFormat::class, 'paper_reviews');
+    }
+
+    public function review_presentations(): BelongsToMany
+    {
+        return $this->belongsToMany(Presentation::class, 'paper_reviews');
+    }
+
+
     public function scopeName($query, $term)
     {
         if (trim($term)) {

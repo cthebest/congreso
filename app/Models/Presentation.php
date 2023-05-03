@@ -22,6 +22,17 @@ class Presentation extends Model
         return $this->belongsToMany(User::class);
     }
 
+    // Evaluacion general de la ponencia
+    public function thematics(): BelongsToMany
+    {
+        return $this->belongsToMany(Thematic::class, 'paper_reviews');
+    }
+
+    public function review_question_formats(): BelongsToMany
+    {
+        return $this->belongsToMany(EvaluationFormat::class, 'paper_reviews');
+    }
+
     public function scopeTitle($query, $search)
     {
         if (trim($search)) {

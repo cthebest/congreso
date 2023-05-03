@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             EvaluationAxesSeeder::class,
             QuestionSeeder::class,
             QuestionMapSeeder::class,
+            ThematicSeeder::class,
         ]);
     }
 }

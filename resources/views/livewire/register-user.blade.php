@@ -70,6 +70,7 @@
                         <legend>Ponencias Asignadas</legend>
                         <div class="p-4 max-h-36 overflow-y-auto">
                             <ul>
+
                                 @foreach($assigned_presentations as $presentation)
                                     <li wire:key="{{ $loop->index }}"
                                         class="transition-colors delay-400 duration-300 {{$loop->last?'bg-red-100':''}}">
