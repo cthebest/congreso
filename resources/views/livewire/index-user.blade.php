@@ -10,6 +10,12 @@
                     @endif
                 </div>
 
+                @if(Session::has('failures'))
+                    <div class="mt-4">
+                        <a href="{{route('import.log')}}" class="bg-gray-800 p-2">Ver log</a>
+                    </div>
+                @endif
+
                 <div class="md:flex md:items-center md:justify-between">
                     <div
                         class="inline-flex overflow-hidden bg-white border divide-x rounded-lg dark:bg-gray-900 rtl:flex-row-reverse dark:border-gray-700 dark:divide-gray-700">
@@ -19,6 +25,13 @@
                             dark:bg-gray-800 dark:text-gray-300" href="{{route('register')}}">
                             Registrar
                         </a>
+
+                        <button
+                            class="px-5 py-2 text-xs font-medium text-gray-600
+                            transition-colors duration-200 bg-gray-100 sm:text-sm
+                            dark:bg-gray-800 dark:text-gray-300" onclick="abrirArchivo()">
+                            Importar usuarios
+                        </button>
 
                         <button
                             class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors
@@ -138,4 +151,19 @@
             </div>
         </div>
     </section>
+    <form action="{{route('users.import')}}" method="post" enctype="multipart/form-data" id="form">
+        @csrf
+        <input type="file" name="file" id="input-file" hidden="hidden" accept=".xlsx, .xls, .csv" onchange="upload()">
+    </form>
+    <script>
+        function abrirArchivo() {
+            document.getElementById("input-file").click();
+        }
+
+        function upload() {
+            document.getElementById('form').submit();
+        }
+    </script>
 </div>
+
+

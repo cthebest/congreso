@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\PresentationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Livewire\PresentationLivewire;
@@ -36,6 +37,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/presentations', PresentationLivewire::class)->middleware('role:admin|evaluator')->name('presentations');
     Route::get('/presentations/upload', [PresentationController::class, 'create'])->middleware('role:admin')->name('upload');
     Route::post('/presentations/upload', [PresentationController::class, 'store'])->middleware('role:admin')->name('upload.store');
+
+    Route::post('users/import', [RegisteredUserController::class, 'import'])->middleware('role:admin')->name('users.import');
+    Route::get('users/import/log', [RegisteredUserController::class, 'download_log'])->middleware('role:admin')->name('import.log');
 
     Route::get('/presentations/{id}', function ($id) {
         $presentation = Presentation::find($id);

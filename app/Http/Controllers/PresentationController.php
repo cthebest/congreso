@@ -35,7 +35,7 @@ class PresentationController extends Controller
         $files = $request->file('files');
         $presentations = [];
         foreach ($files as $file) {
-            $title = $file->getClientOriginalName();
+            $title = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
             $presentations[] = ['title' => $title, 'alias' => Str::slug($title), 'file_path' => $file->store('files')];
         }
         Presentation::insert($presentations);
