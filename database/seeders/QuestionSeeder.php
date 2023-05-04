@@ -28,7 +28,7 @@ class QuestionSeeder extends Seeder
             'description' => 'El trabajo presenta conclusiones'
         ]);
         Question::create([
-            'description' => 'Incluye referencias bibliográficas (en normas APA sexta edición).'
+            'description' => 'Incluye referencias bibliográficas (en normas APA séptima edición).'
         ]);
         Question::create([
             'description' => 'El escrito tiene un mínimo de 3 y un máximo de 4 páginas, equivalentes a 1300 palabras'
@@ -92,7 +92,7 @@ class QuestionSeeder extends Seeder
         ]);
 
         Question::create([
-            'description' => 'Incluye referencias bibliográficas en normas APA sexta edición.'
+            'description' => 'Incluye referencias bibliográficas en normas APA séptima edición.'
         ]);
 
         Question::create([
@@ -104,7 +104,7 @@ class QuestionSeeder extends Seeder
         ]);
 
         Question::create([
-            'description' => 'Las citaciones y referencias cumplen con la norma APA sexta edición'
+            'description' => 'Las citaciones y referencias cumplen con la norma APA séptima edición'
         ]);
 
         Question::create([
