@@ -26,7 +26,7 @@
                 <tbody>
                 @foreach($thematics as $thematic)
                     <tr class="border">
-                        <td class="px-4 py-2">{{$thematic->description}}
+                        <td class="px-4 py-2">{{$loop->iteration}}. {{$thematic->description}}
                         </td>
                         <td class="px-4 py-2 flex justify-center">
                             {{html()->radio('thematic')->value($thematic->id)->attribute('wire:model','thematic')}}
@@ -54,7 +54,7 @@
                     <tbody>
                     @foreach($evaluation['questions'] as $question_key=> $question)
                         <tr>
-                            <td class="px-4 py-2">{{$question['description']}}
+                            <td class="px-4 py-2">{{$loop->iteration}}. {{$question['description']}}
                             </td>
                             <td class="px-4 py-2 flex justify-center">
                                 {{html()->select('value',['si'=>'Sí','partial'=>'Parcialmente','no'=>'No'])

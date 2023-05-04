@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Presentation;
 use App\Http\Requests\StorePresentationRequest;
 use App\Http\Requests\UpdatePresentationRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class PresentationController extends Controller
@@ -29,17 +30,15 @@ class PresentationController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePresentationRequest $request)
+    public function store(Request $request)
     {
         $files = $request->file('files');
+        $presentations = [];
         foreach ($files as $file) {
             $title = $file->getClientOriginalName();
-            $presentation = new Presentation();
-            $presentation->title = $title;
-            $presentation->alias = Str::slug($title);
-            $presentation->file_path = $file->store('files');
-            $presentation->save();
+            $presentations[] = ['title' => $title, 'alias' => Str::slug($title), 'file_path' => $file->store('files')];
         }
+        Presentation::insert($presentations);
         session()->flash('message', 'Presentaciones subidas con éxito');
 
         return redirect()->route('presentations');
