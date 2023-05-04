@@ -11,8 +11,8 @@
                 </div>
 
                 @if(Session::has('failures'))
-                    <div class="mt-4">
-                        <a href="{{route('import.log')}}" class="bg-gray-800 p-2">Ver log</a>
+                    <div class="mt-4 mb-4">
+                        <a href="{{route('import.log')}}" class="bg-gray-800 p-2 text-white">Ver log</a>
                     </div>
                 @endif
 
