@@ -11,7 +11,7 @@ class StorePresentationRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return $this->user()->hasRole('admin');
     }
 
     /**
@@ -22,7 +22,11 @@ class StorePresentationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'files' => 'required',
+            'files.*' => [
+                'required',
+                'mimes:pdf,docx,doc,dot'
+            ]
         ];
     }
 }

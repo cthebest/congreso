@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PresentationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Livewire\PresentationLivewire;
 use App\Http\Livewire\SelectEvaluation;
@@ -33,7 +34,8 @@ Route::middleware('auth')->group(function () {
 
 
     Route::get('/presentations', PresentationLivewire::class)->middleware('role:admin|evaluator')->name('presentations');
-    Route::get('/presentations/upload', UploadPresentation::class)->middleware('role:admin')->name('upload');
+    Route::get('/presentations/upload', [PresentationController::class, 'create'])->middleware('role:admin')->name('upload');
+    Route::post('/presentations/upload', [PresentationController::class, 'store'])->middleware('role:admin')->name('upload.store');
 
     Route::get('/presentations/{id}', function ($id) {
         $presentation = Presentation::find($id);

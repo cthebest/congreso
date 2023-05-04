@@ -25,14 +25,20 @@
                         file:[margin-inline-end:0.75rem] hover:file:bg-neutral-200 focus:border-primary
                         focus:text-neutral-700 focus:shadow-te-primary focus:outline-none"
                         type="file"
-                        id="formFile" multiple accept="application/pdf,application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" wire:model="files"/>
+                        id="formFile" multiple
+                        accept="application/pdf,application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                        wire:model="files"/>
                     <x-input-error :messages="$errors->get('files')" class="mt-2"/>
                 </div>
-
+                @if($files)
                 <div class="flex items-center justify-end mt-4">
                     <x-primary-button class="ml-4" wire:click="upload">
                         {{ __('Subir') }}
                     </x-primary-button>
+                </div>
+                @endif
+                <div wire:loading>
+                    Cargando archivos para subir
                 </div>
             </div>
         </div>

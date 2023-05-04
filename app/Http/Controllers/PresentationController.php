@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Presentation;
 use App\Http\Requests\StorePresentationRequest;
 use App\Http\Requests\UpdatePresentationRequest;
+use Illuminate\Support\Str;
 
 class PresentationController extends Controller
 {
@@ -22,7 +23,7 @@ class PresentationController extends Controller
      */
     public function create()
     {
-        //
+        return view('presentation.upload-presentation');
     }
 
     /**
@@ -30,7 +31,18 @@ class PresentationController extends Controller
      */
     public function store(StorePresentationRequest $request)
     {
-        //
+        $files = $request->file('files');
+        foreach ($files as $file) {
+            $title = $file->getClientOriginalName();
+            $presentation = new Presentation();
+            $presentation->title = $title;
+            $presentation->alias = Str::slug($title);
+            $presentation->file_path = $file->store('files');
+            $presentation->save();
+        }
+        session()->flash('message', 'Presentaciones subidas con éxito');
+
+        return redirect()->route('presentations');
     }
 
     /**

@@ -33,16 +33,6 @@ class UploadPresentation extends Component
     public function upload()
     {
         $this->validate();
-        foreach ($this->files as $file) {
-            $title = $file->getClientOriginalName();
-            $presentation = new Presentation();
-            $presentation->title = $title;
-            $presentation->alias = Str::slug($title);
-            $presentation->file_path = $file->store('files');
-            $presentation->save();
-        }
-        session()->flash('message', 'Presentaciones subidas con éxito');
 
-        return redirect()->route('presentations');
     }
 }
