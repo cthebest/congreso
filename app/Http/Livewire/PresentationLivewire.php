@@ -19,7 +19,7 @@ class PresentationLivewire extends Component
         $user = Auth::user();
 
         if ($user->hasRole('evaluator')) {
-            $query = $user->presentations()->whereDoesntHave('thematics');
+            $query = $user->presentations();
 
         } else {
             $query = Presentation::with('users');

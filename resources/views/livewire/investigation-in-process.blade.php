@@ -78,7 +78,8 @@
     </div>
 
     <div class="mt-4 flex flex-col">
-        {{html()->label("Describa, en un máximo de 255 caracteres, su valoración del escrito. De ser el caso, indique los ajustes que deben realizarse, pues esta información se remitirá al autor / autores.")->for("description")}}
+        {{html()->label("Describa, en un máximo de 150 palabras, su valoración del escrito. De ser el caso, indique los ajustes que deben realizarse, pues esta información se remitirá al autor / autores.")->for("description")}}
+        <span class="text-xs font-semibold text-green-600 {{$words_left<0?'text-red-600':''}}">Cantidad de palabras restantes {{$words_left}}</span>
         <textarea id="description" name="description" wire:model="description"></textarea>
         <x-input-error :messages="$errors->get('description')" class="mt-2"/>
     </div>

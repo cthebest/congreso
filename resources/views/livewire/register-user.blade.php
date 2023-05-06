@@ -70,15 +70,18 @@
                         <legend>Ponencias Asignadas</legend>
                         <div class="p-4 max-h-36 overflow-y-auto">
                             <ul>
-
                                 @foreach($assigned_presentations as $presentation)
                                     <li wire:key="{{ $loop->index }}"
                                         class="transition-colors delay-400 duration-300 {{$loop->last?'bg-red-100':''}}">
                                         {{$presentation['title']}}
-                                        <button type="button" class="text-green-600 hover:text-red-400"
-                                                wire:click="unlock({{$loop->index}})">
-                                            Liberar
-                                        </button>
+                                        @if(!$presentation->review_question_users()->where('user_id', $user->id)->first())
+                                            <button type="button" class="text-green-600 hover:text-red-400"
+                                                    wire:click="unlock({{$loop->index}})">
+                                                Liberar
+                                            </button>
+                                        @else
+                                            <span class="text-blue-600">Evaluado</span>
+                                        @endif
                                     </li>
                                 @endforeach
                             </ul>

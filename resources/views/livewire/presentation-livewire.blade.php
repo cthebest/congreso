@@ -95,16 +95,6 @@
                                             class="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                             Archivo
                                         </th>
-
-                                        <th scope="col"
-                                            class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                            Fecha de creación
-                                        </th>
-
-                                        <th scope="col"
-                                            class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                            Fecha de actualización
-                                        </th>
                                     </tr>
                                     </thead>
                                     <tbody
@@ -124,9 +114,15 @@
                                             </td>
 
                                             @role('evaluator')
+
                                             <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                                                {{html()->radio('select')->value($presentation->id)->attribute('wire:model','evaluate_presentation_id')}}
+                                                @if(!$presentation->review_question_users()->where('user_id', auth()->id())->first())
+                                                    {{html()->radio('select')->value($presentation->id)->attribute('wire:model','evaluate_presentation_id')}}
+                                                @else
+                                                    <span class="text-green-600">Terminado</span>
+                                                @endif
                                             </td>
+
                                             @endrole
                                             <td class="px-12 py-4 text-sm font-medium whitespace-nowrap dark:text-white hover:text-green-500">
                                                 {{$presentation->title}}
@@ -135,8 +131,26 @@
                                             <td class="px-12 py-4 text-sm font-medium whitespace-nowrap dark:text-white ">
                                                 @if($presentation->users()->count()>0)
                                                     @foreach($presentation->users as $user)
-                                                        <a href="{{route('users.edit', $user->id)}}"
-                                                           class="flex hover:text-green-500">{{$user->name}}</a>
+                                                        <div class="flex">
+
+                                                            <a href="{{route('users.edit', $user->id)}}"
+                                                               class="flex hover:text-green-500">{{$user->name}}
+                                                                @if($presentation->review_question_users()->where('user_id', $user->id)->first())
+                                                                    <span class="rounded-full h-4 w-4 bg-green-600">
+                                                                    <svg
+                                                                        xmlns="http://www.w3.org/2000/svg"
+                                                                        fill="none" viewBox="0 0 24 24"
+                                                                        stroke-width="1.5" stroke="currentColor"
+                                                                        class="w-4 h-4">
+                                                                        <path stroke-linecap="round"
+                                                                              stroke-linejoin="round"
+                                                                              d="M4.5 12.75l6 6 9-13.5"/>
+                                                                    </svg>
+                                                                    </span>
+                                                                @endif
+                                                            </a>
+
+                                                        </div>
                                                     @endforeach
                                                 @else
                                                     Sin asignar
@@ -148,14 +162,6 @@
                                                 <a href="{{route('presentations.show', $presentation->id)}}">Ver
                                                     archivo
                                                 </a>
-                                            </td>
-
-
-                                            <td class="px-12 py-4 text-sm font-medium whitespace-nowrap dark:text-white">
-                                                {{$presentation->created_at}}
-                                            </td>
-                                            <td class="px-12 py-4 text-sm font-medium whitespace-nowrap dark:text-white">
-                                                {{$presentation->updated_at}}
                                             </td>
                                         </tr>
                                     @endforeach

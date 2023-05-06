@@ -3,12 +3,13 @@
 namespace App\Traits;
 
 use App\Models\Thematic;
+use App\Rules\WordCountRule;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
-
+define('MAX_WORDS', 150);
 trait FormatTrait
 {
     public $presentation_id;
@@ -21,6 +22,7 @@ trait FormatTrait
 
     public $description;
 
+    public int $words_left = MAX_WORDS;
     public function mount($presentation_id): void
     {
         $this->presentation_id = $presentation_id;
@@ -31,7 +33,7 @@ trait FormatTrait
     public function rules()
     {
         return [
-            'description' => 'required|max:255',
+            'description' => ['required', new WordCountRule(150)],
             'general_evaluation' => 'required|in:aceptado,aceptado con modificaciones,no es aceptado',
             'thematic' => 'required|exists:thematics,id'
         ];
@@ -68,5 +70,10 @@ trait FormatTrait
         session()->flash('message', 'Evaluación se guardó con éxito');
 
         return redirect()->route('presentations');
+    }
+
+    public function updatingDescription($value)
+    {
+        $this->words_left = MAX_WORDS - str_word_count($value);
     }
 }

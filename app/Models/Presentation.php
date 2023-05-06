@@ -33,6 +33,11 @@ class Presentation extends Model
         return $this->belongsToMany(EvaluationFormat::class, 'paper_reviews');
     }
 
+    public function review_question_users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'paper_reviews');
+    }
+
     public function scopeTitle($query, $search)
     {
         if (trim($search)) {

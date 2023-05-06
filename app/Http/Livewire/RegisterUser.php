@@ -25,8 +25,7 @@ class RegisterUser extends Component
     {
         return [
             'user.name' => [
-                'required',
-                Rule::unique('users', 'name')->ignore($this->user->id)
+                'required'
             ],
             'user.email' => [
                 'required',
