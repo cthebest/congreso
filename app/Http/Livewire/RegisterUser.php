@@ -18,8 +18,8 @@ class RegisterUser extends Component
     public User $user;
     public int $role_id = 2;
     public Collection $assigned_presentations;
-
     public string $search_presentations = '';
+    public string $password = '';
 
     public function rules()
     {
@@ -29,7 +29,7 @@ class RegisterUser extends Component
             ],
             'user.email' => [
                 'required',
-                'email',
+                'email_edu',
                 Rule::unique('users', 'email')->ignore($this->user->id)
             ],
             'role_id' => 'required|exists:roles,id'
@@ -68,8 +68,15 @@ class RegisterUser extends Component
     {
         $this->validate();
         $this->user->syncRoles($this->role_id);
+        $this->user->email = trim($this->user->email);
+
         if (!$this->user->id)
             $this->user->password = bcrypt($this->user->email);
+
+
+        if ($this->password) {
+            $this->user->password = bcrypt($this->password);
+        }
         $this->user->save();
 
         // Sincronizamos las ponencias asignadas

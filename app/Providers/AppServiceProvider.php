@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -20,6 +21,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Validator::extend('email_edu', function ($attribute, $value, $parameters, $validator) {
+            return preg_match('/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(edu\.co|com|org|net)$/', $value);
+        });
     }
 }
