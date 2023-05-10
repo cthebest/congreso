@@ -63,6 +63,11 @@ class RegisterUser extends Component
     {
         $this->assigned_presentations = $this->assigned_presentations->forget($key)->values();
     }
+    /**
+     * Validates the input, syncs user's roles, and saves the user.
+     *
+     * @return Illuminate\Http\RedirectResponse
+     */
 
     public function store()
     {
